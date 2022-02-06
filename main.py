@@ -10,4 +10,7 @@ def create_app():
     from api.BackendApiHandler import backendApi
     app.register_blueprint(backendApi)
 
+    from api.TwitterApiHandler import twitterApi
+    app.register_blueprint(twitterApi)
+
     return app
