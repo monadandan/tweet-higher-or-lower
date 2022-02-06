@@ -6,7 +6,7 @@ function App() {
   const [apiCall, setApiCall] = useState({})
 
   function callApi() {
-    fetch("/api/get_text").then(response =>
+    fetch("/twitter_api/get_tweet").then(response =>
       response.json().then(data =>
         setApiCall(data)
       )
