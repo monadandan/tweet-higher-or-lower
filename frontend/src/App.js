@@ -14,33 +14,50 @@ function App() {
 
   const [tweet1, setTweet1] = useState({})
   const [tweet2, setTweet2] = useState({})
-  const [userClicked, setUserClicked] = useState(false)
-  const [userResponse, setUserResponse] = useState(null)
+  const [currentStreak, setCurrentStreak] = useState(0)
+  const [lastStreak, setLastStreak] = useState(0);
 
   useEffect(() => {
     callApi(setTweet1)
     callApi(setTweet2)
   }, [])
+
+  function winLogic(setTweet) {
+    callApi(setTweet);
+    setCurrentStreak(x => x+1);
+  }
+
+  function loseLogic() {
+    callApi(setTweet1);
+    callApi(setTweet2);
+    setLastStreak(currentStreak);
+    setCurrentStreak(0);
+  }
   
   return (
     <div className="App">
       <header className="App-header">
-        {userClicked ? 
-          <div>User won: {userResponse ? "yes!" : "no :("}</div>
+        {currentStreak > 0 ? 
+          <div>Nice job, your streak is at {currentStreak}. Keep going!</div>
           :
-          <div>User hasn't clicked yet.</div>
+          <div>
+            {lastStreak > 0 ?
+              <div>Awww :( You lost at a streak of {lastStreak}</div>
+              :
+              <div></div>
+            }
+            <div>Which tweet do you think got more favorites?</div>
+          </div>
         }
         <br />
         <br />
         <Panel text={tweet1.text} clickHandler={() => {
-          setUserClicked(true);
-          setUserResponse(tweet1.favorites > tweet2.favorites);
+          tweet1.favorites >= tweet2.favorites ? winLogic(setTweet2) : loseLogic();
         }}/>
         <br />
         <br />
         <Panel text={tweet2.text} clickHandler={() => {
-          setUserClicked(true);
-          setUserResponse(tweet2.favorites > tweet1.favorites);
+          tweet2.favorites >= tweet1.favorites ? winLogic(setTweet1) : loseLogic();
         }}/>
       </header>
     </div>
