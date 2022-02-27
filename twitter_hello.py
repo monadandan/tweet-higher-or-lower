@@ -27,15 +27,17 @@ for user_id in user_ids:
 print("\n".join(str(tup) for tup in tweets))
 
 
-'''tweets = t.tweet_lookup(tweet_ids=["1484571486170058761"], tweet_fields="public_metrics")
+'''
+tweets = t.tweet_lookup(tweet_ids=["1484571486170058761"], tweet_fields="public_metrics")
 for tweet in tweets:
     print(json.dumps(tweet, indent=4))
     print("")
 '''
 
-'''import tweepy
+'''
+import tweepy
 
-client = tweepy.Client(bearer_token="AAAAAAAAAAAAAAAAAAAAADvMZgEAAAAAnM42xMXGTTTSaCUjZ6NQx7Dky4E%3DKGmM743UM4T7ylwQ053pwnEEhzZE0HPI2jchsDotlUJbNWPdg7")
+client = tweepy.Client(bearer_token=getBearerToken())
 
 username = "Kickem_Doordown"
 user = client.get_user(username=username)
