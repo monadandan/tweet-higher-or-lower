@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css';
 import Panel from './Components/Panel'
 
@@ -24,7 +24,7 @@ function App() {
 
   function winLogic(setTweet) {
     callApi(setTweet);
-    setCurrentStreak(x => x+1);
+    setCurrentStreak(x => x + 1);
   }
 
   function loseLogic() {
@@ -33,11 +33,11 @@ function App() {
     setLastStreak(currentStreak);
     setCurrentStreak(0);
   }
-  
+
   return (
     <div className="App">
       <header className="App-header">
-        {currentStreak > 0 ? 
+        {currentStreak > 0 ?
           <div>Nice job, your streak is at {currentStreak}. Keep going!</div>
           :
           <div>
@@ -49,17 +49,16 @@ function App() {
             <div>Which tweet do you think got more favorites?</div>
           </div>
         }
-        <br />
-        <br />
+      </header>
+      <div className="App-main">
         <Panel text={tweet1.text} clickHandler={() => {
           tweet1.favorites >= tweet2.favorites ? winLogic(setTweet2) : loseLogic();
-        }}/>
-        <br />
+        }} />
         <br />
         <Panel text={tweet2.text} clickHandler={() => {
           tweet2.favorites >= tweet1.favorites ? winLogic(setTweet1) : loseLogic();
-        }}/>
-      </header>
+        }} />
+      </div>
     </div>
   );
 }
