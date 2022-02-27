@@ -3,7 +3,7 @@ import './App.css';
 import Panel from './Components/Panel'
 
 function callApi(setApiCall) {
-  fetch("/twitter_api/get_tweet").then(response =>
+  fetch("/twitter_api/get_tweet/Kickem_Doordown").then(response =>
     response.json().then(data =>
       setApiCall(data)
     )

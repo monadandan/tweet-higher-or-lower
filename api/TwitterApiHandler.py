@@ -1,13 +1,40 @@
 from flask import Blueprint, jsonify
 import random
+from api.secrets import getBearerToken
+from twarc.client2 import Twarc2
+import json
 
 twitterApi = Blueprint("twitterApi", __name__, url_prefix="/twitter_api")
+t = Twarc2(bearer_token=getBearerToken())
+    
 
-@twitterApi.route('/get_tweet')
-def get_tweet():
-    words = ['VIRES', 'VIRGA', 'VIRGE', 'VIRID', 'VIRLS', 'VIRTU', 'VIRUS', 'VISAS', 'VISED', 'VISES', 'VISIE', 'VISIT', 'VISNE', 'VISON', 'VISOR', 'VISTA', 'VISTO', 'VITAE', 'VITAL', 'VITAS', 'VITEX', 'VITRO', 'VITTA', 'VIVAS', 'VIVAT', 'VIVDA', 'VIVER', 'VIVES', 'VIVID', 'VIXEN', 'VIZIR', 'VIZOR', 'VLEIS', 'VLIES', 'VLOGS', 'VOARS', 'VOCAB', 'VOCAL', 'VOCES', 'VODDY', 'VODKA', 'VODOU', 'VODUN', 'VOEMA', 'VOGIE', 'VOGUE', 'VOICE', 'VOIDS', 'VOILA', 'VOILE', 'VOIPS', 'VOLAE', 'VOLAR', 'VOLED', 'VOLES', 'VOLET', 'VOLKS', 'VOLTA', 'VOLTE', 'VOLTI', 'VOLTS', 'VOLVA', 'VOLVE', 'VOMER', 'VOMIT', 'VOTED', 'VOTER', 'VOTES', 'VOUCH', 'VOUGE', 'VOULU', 'VOWED', 'VOWEL', 'VOWER', 'VOXEL', 'VOZHD', 'VRAIC', 'VRILS', 'VROOM', 'VROUS', 'VROUW', 'VROWS', 'VUGGS', 'VUGGY', 'VUGHS', 'VUGHY', 'VULGO', 'VULNS', 'VULVA', 'VUTTY', 'VYING', 'WAACS', 'WACKE', 'WACKO', 'WACKS', 'WACKY', 'WADDS', 'WADDY', 'WADED', 'WADER', 'WADES', 'WADGE', 'WADIS', 'WADTS', 'WAFER', 'WAFFS', 'WAFTS', 'WAGED', 'WAGER', 'WAGES', 'WAGGA', 'WAGON', 'WAGYU', 'WAHOO', 'WAIDE', 'WAIFS', 'WAIFT', 'WAILS', 'WAINS', 'WAIRS', 'WAIST', 'WAITE', 'WAITS', 'WAIVE', 'WAKAS', 'WAKED', 'WAKEN', 'WAKER', 'WAKES', 'WAKFS', 'WALDO', 'WALDS', 'WALED', 'WALER', 'WALES', 'WALIE', 'WALIS', 'WALKS', 'WALLA', 'WALLS', 'WALLY', 'WALTY', 'WALTZ', 'WAMED', 'WAMES', 'WAMUS', 'WANDS', 'WANED', 'WANES', 'WANEY', 'WANGS', 'WANKS', 'WANKY', 'WANLE', 'WANLY', 'WANNA', 'WANTS', 'WANTY', 'WANZE', 'WAQFS', 'WARBS', 'WARBY', 'WARDS', 'WARED', 'WARES', 'WAREZ', 'WARKS', 'WARMS', 'WARNS', 'WARPS', 'WARRE', 'WARST', 'WARTS', 'WARTY', 'WASES', 'WASHY', 'WASMS', 'WASPS', 'WASPY', 'WASTE', 'WASTS', 'WATAP', 'WATCH', 'WATER', 'WATTS', 'WAUFF', 'WAUGH', 'WAUKS', 'WAULK', 'WAULS', 'WAURS', 'WAVED', 'WAVER', 'WAVES', 'WAVEY', 'WAWAS', 'WAWES', 'WAWLS', 'WAXED', 'WAXEN', 'WAXER', 'WAXES', 'WAYED', 'WAZIR', 'WAZOO', 'WEALD', 'WEALS', 'WEAMB', 'WEANS', 'WEARS', 'WEARY', 'WEAVE', 'WEBBY', 'WEBER', 'WECHT', 'WEDEL', 'WEDGE', 'WEDGY', 'WEEDS', 'WEEDY', 'WEEKE', 'WEEKS', 'WEELS', 'WEEMS', 'WEENS', 'WEENY', 'WEEPS', 'WEEPY', 'WEEST', 'WEETE', 'WEETS', 'WEFTE', 'WEFTS', 'WEIDS', 'WEIGH', 'WEILS', 'WEIRD', 'WEIRS', 'WEISE', 'WEIZE', 'WEKAS', 'WELCH', 'WELDS', 'WELKE', 'WELKS', 'WELKT', 'WELLS', 'WELLY', 'WELSH', 'WELTS', 'WEMBS', 'WENCH', 'WENDS', 'WENGE', 'WENNY', 'WENTS', 'WEROS', 'WERSH', 'WESTS', 'WETAS', 'WETLY', 'WEXED', 'WEXES', 'WHACK', 'WHALE', 'WHAMO', 'WHAMS', 'WHANG', 'WHAPS', 'WHARE', 'WHARF', 'WHATA', 'WHATS', 'WHAUP', 'WHAUR', 'WHEAL', 'WHEAR', 'WHEAT', 'WHEEL', 'WHEEN', 'WHEEP', 'WHEFT', 'WHELK', 'WHELM', 'WHELP', 'WHENS', 'WHERE', 'WHETS', 'WHEWS', 'WHEYS', 'WHICH', 'WHIDS', 'WHIFF', 'WHIFT', 'WHIGS', 'WHILE', 'WHILK', 'WHIMS', 'WHINE', 'WHINS', 'WHINY', 'WHIOS', 'WHIPS', 'WHIPT', 'WHIRL', 'WHIRR', 'WHIRS', 'WHISH', 'WHISK', 'WHISS', 'WHIST', 'WHITE', 'WHITS', 'WHITY', 'WHIZZ', 'WHOLE', 'WHOMP', 'WHOOF', 'WHOOP', 'WHOOT', 'WHOPS', 'WHORE', 'WHORL', 'WHORT', 'WHOSE', 'WHOSO', 'WHOWS', 'WHUMP', 'WHUPS', 'WHYDA', 'WICCA', 'WICKS', 'WICKY', 'WIDDY', 'WIDEN', 'WIDER', 'WIDES', 'WIDOW', 'WIDTH', 'WIELD', 'WIELS', 'WIFED', 'WIFES', 'WIFEY', 'WIFIE', 'WIFTY', 'WIGAN', 'WIGGA', 'WIGGY', 'WIGHT', 'WIKIS', 'WILCO', 'WILDS', 'WILED', 'WILES', 'WILGA', 'WILIS', 'WILJA', 'WILLS', 'WILLY', 'WILTS', 'WIMPS', 'WIMPY', 'WINCE', 'WINCH', 'WINDS', 'WINDY', 'WINED', 'WINES', 'WINEY', 'WINGE', 'WINGS', 'WINGY', 'WINKS', 'WINNA', 'WINNS', 'WINOS', 'WINZE', 'WIPED', 'WIPER', 'WIPES', 'WIRED', 'WIRER', 'WIRES', 'WIRRA', 'WISED', 'WISER', 'WISES', 'WISHA', 'WISHT', 'WISPS', 'WISPY', 'WISTS', 'WITAN', 'WITCH', 'WITED', 'WITES', 'WITHE', 'WITHS', 'WITHY', 'WITTY', 'WIVED', 'WIVER', 'WIVES', 'WIZEN', 'WIZES', 'WOADS', 'WOALD', 'WOCKS', 'WODGE', 'WOFUL', 'WOJUS', 'WOKEN', 'WOKER', 'WOKKA', 'WOLDS', 'WOLFS', 'WOLLY', 'WOLVE', 'WOMAN', 'WOMBS', 'WOMBY', 'WOMEN', 'WOMYN', 'WONGA', 'WONGI', 'WONKS', 'WONKY', 'WONTS', 'WOODS', 'WOODY', 'WOOED', 'WOOER', 'WOOFS', 'WOOFY', 'WOOLD', 'WOOLS', 'WOOLY', 'WOONS', 'WOOPS', 'WOOPY', 'WOOSE', 'WOOSH', 'WOOTZ', 'WOOZY', 'WORDS', 'WORDY', 'WORKS', 'WORLD', 'WORMS', 'WORMY', 'WORRY', 'WORSE', 'WORST', 'WORTH', 'WORTS', 'WOULD', 'WOUND', 'WOVEN', 'WOWED', 'WOWEE', 'WOXEN', 'WRACK', 'WRANG', 'WRAPS', 'WRAPT', 'WRAST', 'WRATE', 'WRATH', 'WRAWL', 'WREAK', 'WRECK', 'WRENS', 'WREST', 'WRICK', 'WRIED', 'WRIER', 'WRIES', 'WRING', 'WRIST', 'WRITE', 'WRITS', 'WROKE', 'WRONG', 'WROOT', 'WROTE', 'WROTH', 'WRUNG', 'WRYER', 'WRYLY', 'WUDDY', 'WUDUS', 'WULLS', 'WURST', 'WUSES', 'WUSHU', 'WUSSY', 'WUXIA', 'WYLED', 'WYLES', 'WYNDS', 'WYNNS', 'WYTED', 'WYTES', 'XEBEC', 'XENIA', 'XENIC', 'XENON', 'XERIC', 'XEROX', 'XERUS', 'XOANA', 'XRAYS', 'XYLAN', 'XYLEM', 'XYLIC', 'XYLOL', 'XYLYL', 'XYSTI', 'XYSTS', 'YAARS', 'YABAS', 'YABBA', 'YABBY', 'YACCA', 'YACHT', 'YACKA', 'YACKS', 'YAFFS', 'YAGER', 'YAGES', 'YAGIS', 'YAHOO', 'YAIRD', 'YAKKA', 'YAKOW', 'YALES', 'YAMEN', 'YAMPY', 'YAMUN', 'YANGS', 'YANKS', 'YAPOK', 'YAPON', 'YAPPS', 'YAPPY', 'YARAK', 'YARCO', 'YARDS', 'YARER', 'YARFA', 'YARKS', 'YARNS', 'YARRS', 'YARTA', 'YARTO', 'YATES', 'YAUDS', 'YAULD', 'YAUPS', 'YAWED', 'YAWEY', 'YAWLS', 'YAWNS', 'YAWNY', 'YAWPS', 'YBORE', 'YCLAD', 'YCLED', 'YCOND', 'YDRAD', 'YDRED', 'YEADS', 'YEAHS', 'YEALM', 'YEANS', 'YEARD', 'YEARN', 'YEARS', 'YEAST', 'YECCH', 'YECHS', 'YECHY', 'YEDES', 'YEEDS', 'YEESH', 'YEGGS', 'YELKS', 'YELLS', 'YELMS', 'YELPS', 'YELTS', 'YENTA', 'YENTE', 'YERBA', 'YERDS', 'YERKS', 'YESES', 'YESKS', 'YESTS', 'YESTY', 'YETIS', 'YETTS', 'YEUKS', 'YEUKY', 'YEVEN', 'YEVES', 'YEWEN', 'YEXED', 'YEXES', 'YFERE', 'YIELD', 'YIKED', 'YIKES', 'YILLS', 'YINCE', 'YIPES', 'YIPPY', 'YIRDS', 'YIRKS', 'YIRRS', 'YIRTH', 'YITES', 'YITIE', 'YLEMS', 'YLIKE', 'YLKES', 'YMOLT', 'YMPES', 'YOBBO', 'YOBBY', 'YOCKS', 'YODEL', 'YODHS', 'YODLE', 'YOGAS', 'YOGEE', 'YOGHS', 'YOGIC', 'YOGIN', 'YOGIS', 'YOICK', 'YOJAN', 'YOKED', 'YOKEL', 'YOKER', 'YOKES', 'YOKUL', 'YOLKS', 'YOLKY', 'YOMIM', 'YOMPS', 'YONIC', 'YONIS', 'YONKS', 'YOOFS', 'YOOPS', 'YORES', 'YORKS', 'YORPS', 'YOUKS', 'YOUNG', 'YOURN', 'YOURS', 'YOURT', 'YOUSE', 'YOUTH', 'YOWED', 'YOWES', 'YOWIE', 'YOWLS', 'YOWZA', 'YRAPT', 'YRENT', 'YRIVD', 'YRNEH', 'YSAME', 'YTOST', 'YUANS', 'YUCAS', 'YUCCA', 'YUCCH', 'YUCKO', 'YUCKS', 'YUCKY', 'YUFTS', 'YUGAS', 'YUKED', 'YUKES', 'YUKKY', 'YUKOS', 'YULAN', 'YULES', 'YUMMO', 'YUMMY', 'YUMPS', 'YUPON', 'YUPPY', 'YURTA', 'YURTS', 'YUZUS', 'ZABRA', 'ZACKS', 'ZAIDA', 'ZAIDY', 'ZAIRE', 'ZAKAT', 'ZAMAN', 'ZAMBO', 'ZAMIA', 'ZANJA', 'ZANTE', 'ZANZA', 'ZANZE', 'ZAPPY', 'ZARFS', 'ZARIS', 'ZATIS', 'ZAXES', 'ZAYIN', 'ZAZEN', 'ZEALS', 'ZEBEC', 'ZEBRA', 'ZEBUB', 'ZEBUS', 'ZEDAS', 'ZEINS', 'ZENDO', 'ZESTY', 'ZONAL']
-    sentence = " ".join(random.choice(words) for i in range(5))
-    favorites = random.randint(0, 1000000)
-    retweets = random.randint(0, 10000)
-    sentence += f" [{favorites} favs and {retweets} rts]"
-    return jsonify({'text': sentence, 'favorites': favorites, 'retweets': retweets})
+@twitterApi.route('/get_tweet/<username>')
+def get_tweet(username):
+    user_id = get_user_id(username)
+    tweets = get_tweets(user_id)
+    return jsonify(random.choice(tweets))
+
+
+def get_user_id(username=None):
+    if not username:
+        username = "Kickem_Doordown"
+    users_response = t.user_lookup([username], usernames=True)
+    for users_page in users_response:
+        user_array = users_page['data']
+        for user in user_array:
+            return user['id']
+
+
+def get_tweets(user_id):
+    tweets = []
+    tweets_response = t.timeline(user=user_id, exclude_retweets=True, exclude_replies=True, max_results=100)
+    for tweets_page in tweets_response:
+        tweet_array = tweets_page['data']
+        for tweet in tweet_array:
+            tweet_dict = {
+                'text': tweet['text'], 
+                'favorites': tweet['public_metrics']['like_count'], 
+                'retweets': tweet['public_metrics']['retweet_count']
+                }
+            tweets.append(tweet_dict)
+    return tweets
